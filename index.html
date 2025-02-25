@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .slider {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+        }
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .controls button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .controls button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide"><img src="image1.webp" alt="Image 1"></div>
+            <div class="slide"><img src="image2.jpg" alt="Image 2"></div>
+            <div class="slide"><img src="image 3.jpg" alt="Image 3"></div>
+            <div class="slide"><img src="image4.avif" alt="Image 4"></div>
+        </div>
+        <div class="controls">
+            <button id="prev">&#10094;</button>
+            <button id="next">&#10095;</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const totalSlides = slides.length;
+        const slideContainer = document.querySelector(".slides");
+        
+        function showSlide(index) {
+            if (index >= totalSlides) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalSlides - 1;
+            } else {
+                currentIndex = index;
+            }
+            slideContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+        
+        document.getElementById("next").addEventListener("click", () => {
+            showSlide(currentIndex + 1);
+        });
+        
+        document.getElementById("prev").addEventListener("click", () => {
+            showSlide(currentIndex - 1);
+        });
+        
+        function autoSlide() {
+            showSlide(currentIndex + 1);
+        }
+        
+        setInterval(autoSlide, 3000);
+    </script>
+</body>
+</html>
